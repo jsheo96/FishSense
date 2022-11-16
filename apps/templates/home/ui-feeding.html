@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-8">
+          <div class="card card-plain">
+            <div class="card-header">
+              <h3 class="card-title">Monitoring Camera</h3>
+            </div>
+            <div class="card-body">
+              <img src="/static/assets/img/monitoring_camera_keypoints.gif" alt="monitoring_camera_keypoints.gif" width="1000px"> <!--style="width:48px;height:48px;">-->
+            </div>
+          </div>
+      </div>
+      <div class="col-4">
+        <div class="row">
+          <div class="card card-chart">
+            <div class="card-header">
+              <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> Fish Appetite Index</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <canvas id="Appetite"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card card-chart">
+            <div class="card-header">
+              <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> Feed Quantity</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <canvas id="Feed"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initFeedingCharts();
+
+    });
+  </script>
+
+{% endblock javascripts %}
