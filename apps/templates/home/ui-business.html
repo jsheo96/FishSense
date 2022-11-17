@@ -1,0 +1,94 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Business Intelligence(BI)</h5>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="col-md-3 pr-md-1">
+              <div class="form-group">
+                <label>입식 어종</label>
+                <input type="text" class="form-control" value="대서양 연어">
+              </div>
+            </div>
+            <div class="col-md-3 pr-md-1">
+              <div class="form-group">
+                <label>입식 마리 수</label>
+                <input type="text" class="form-control" value="10000 마리">
+              </div>
+            </div>
+            <div class="col-md-3 pl-md-1">
+              <div class="form-group">
+                <label>치어 구입 비용</label>
+                <input type="text" class="form-control" value="10 억">
+              </div>
+            </div>
+            <div class="col-md-3 pr-md-1">
+              <div class="form-group">
+                <label>현재 마리 수</label>
+                <input type="text" class="form-control" value="4421 마리">
+              </div>
+            </div>
+            <div class="col-md-3 pr-md-1">
+              <div class="form-group">
+                <label>현재 단가(kg 당)</label>
+                <input type="text" class="form-control" value="5.1 만원 / kg">
+              </div>
+            </div>
+            <div class="col-md-3 pl-md-1">
+              <div class="form-group">
+                <label>예상 매출</label>
+                <input type="text" class="form-control" value="344억">
+              </div>
+            </div>
+            <div class="col-md-6 pl-md-1">
+              <div class="form-group">
+                <label>예상 출하시점</label>
+                <input type="text" class="form-control" value="2023년 11월 17일">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-md-1">
+              <div class="form-group">
+                <label>누적 사료량</label>
+                <input type="text" class="form-control" value="258 톤">
+              </div>
+            </div>
+            <div class="col-md-6 pl-md-1">
+              <div class="form-group">
+                <label>누적 사료 비용</label>
+                <input type="text" class="form-control" value="81억 ">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 pr-md-1">
+              <div class="form-group">
+                <label>예상 순이익</label>
+                <input type="text" class="form-control" placeholder="Last Name" value="140 억원">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
