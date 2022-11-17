@@ -1,3 +1,18 @@
+function smoothing(data_list, max_length) {
+        var result_list = [];
+        var list = [];
+        for (i=0; i<data_list.length; i++) {
+            if (list.length >= max_length) {
+                list.shift();
+            }
+            list.push(data_list[i]);
+            console.log(list)
+            avg = list.reduce((a, b) => a+b, 0) / list.length;
+            result_list.push(avg);
+
+        }
+        return result_list
+    }
 Date.prototype.addDays = function(days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
@@ -532,21 +547,7 @@ demo = {
     console.log(chart_data)
     console.log(gap)
     //TODO smoothing avergae
-    function smoothing(data_list, max_length) {
-        var result_list = [];
-        var list = [];
-        for (i=0; i<data_list.length; i++) {
-            if (list.length >= max_length) {
-                list.shift();
-            }
-            list.push(data_list[i]);
-            console.log(list)
-            avg = list.reduce((a, b) => a+b, 0) / list.length;
-            result_list.push(avg);
 
-        }
-        return result_list
-    }
     chart_data = smoothing(chart_data, 5);
     var gap = Math.max(...chart_data) - Math.min(...chart_data)
     var threshold_high = gap / 3 * 2 + Math.min(...chart_data)
@@ -598,7 +599,7 @@ demo = {
     var myChart = new Chart(ctx, config2);
   },
   initBiomassCharts: function() {
-    var chart_labels = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
+    var chart_labels = ['1000 g','2000 g','3000 g','4000 g','5000 g','6000 g','7000 g','8000 g','9000 g','10000 g'];
     var chart_data = [13,22,29,38,45,40,32,15,10,5];
     var chart_data2 = [14,15,33,42,46,38,40,21,9,2];
     var config = {
@@ -606,14 +607,14 @@ demo = {
       data: {
         labels: chart_labels,
         datasets: [{
-          label: "Tank 1",
-          backgroundColor: 'purple',
-          borderColor: 'purple',
+          label: "Current Tank",
+          backgroundColor: 'magenta',
+          borderColor: 'magenta',
           borderWidth: 1,
           data: chart_data,
         },
         {
-          label: "Tank 2",
+          label: "Average",
           backgroundColor: 'darkgreen',
           borderColor: 'darkgreen',
           borderWidth: 1,
@@ -636,29 +637,104 @@ demo = {
         }
         return values;
     }
-    chart_data = getIncreasingArray(dateArray.length, 100, 5);
+    chart_data = getIncreasingArray(dateArray.length, 100, 40);
+    chart_data = chart_data.map(function (data) {return Math.log(data) * 300 - 800});  //  applying Log
+
+    var bandArray = getRandomArray(chart_data.length, 100, 10);
+    bandArray = smoothing(bandArray, 20);
+    function addTwoArray(arr1, arr2) { // assert two arrays have same length?
+        var results = [];
+        for (i=0;i<arr1.length;i++) {
+            results.push(arr1[i] + arr2[i]);
+        }
+        return results
+    }
+    chart_data_top = addTwoArray(chart_data,bandArray);
+    negativeBandArray = bandArray.map(function(data){return -data});
+    chart_data_bottom = addTwoArray(chart_data, negativeBandArray);
+//    chart_data_top = chart_data.map(function (data) { return data + 20 + Math.random() * 10});
+//    chart_data_bottom = chart_data.map(function (data) { return data - 20 + Math.random() * 10});
+
     var config = {
       type: 'line',
       data: {
         labels: chart_labels,
-        datasets: [{
-          label: "Weights",
-          fill: true,
-          borderColor: 'darkorange',//'#d346b1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 0,
-          data: chart_data,
-        }]
+        datasets: [
+//        {
+//          label: "Tank 1",
+//          fill: true,
+//          borderColor: 'purple',//'#d346b1',
+//          borderWidth: 2,
+//          borderDash: [],
+//          borderDashOffset: 0.0,
+//          pointBackgroundColor: '#d346b1',
+//          pointBorderColor: 'rgba(255,255,255,0)',
+//          pointHoverBackgroundColor: '#d346b1',
+//          pointBorderWidth: 20,
+//          pointHoverRadius: 4,
+//          pointHoverBorderWidth: 15,
+//          pointRadius: 0,
+//          data: chart_data,
+//        },
+        {
+        label: "Weights",
+        type: "line",
+        backgroundColor: "rgb(75, 192, 192, 0.5)",
+        borderColor: "rgb(75, 192, 192)",
+        hoverBorderColor: "rgb(175, 192, 192)",
+        fill: false,
+        tension: 0,
+        data: chart_data,
+        yAxisID: 'y',
+        xAxisID: 'x'
       },
-      options: gradientChartOptionsConfiguration
+        {
+        label: "Upper Band",
+        type: "line",
+        backgroundColor: "rgb(75, 192, 255, 0.5)",
+        borderColor: "transparent",
+        pointRadius: 0,
+        fill: 0,
+        tension: 0,
+        data: chart_data_top,
+        yAxisID: 'y',
+        xAxisID: 'x'
+      },
+      {
+        label: "Lower Band",
+        type: "line",
+        backgroundColor: "rgb(75, 192, 255, 0.5)",
+        borderColor: "transparent",
+        pointRadius: 0,
+        fill: 0,
+        tension: 0,
+        data: chart_data_bottom,
+        yAxisID: 'y',
+        xAxisID: 'x'
+      }]
+      },
+//      options: gradientChartOptionsConfiguration
+      options: {
+        legend: {
+          display: false,
+        },
+        scales: {
+          xAxes: [{
+            id: 'x',
+            type: 'category',
+            ticks: {
+                fontColor: 'white',
+            }
+          }],
+          yAxes: [{
+            id: 'y',
+            ticks: {
+              stepSize: 100,
+              fontColor: 'white',
+            }
+          }]
+        }
+      }
     };
     var myChart = new Chart(ctx, config);
   },
