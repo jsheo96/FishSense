@@ -409,7 +409,7 @@ demo = {
         }
         return values
     }
-    sgr_values = getRandomArray(chart_labels.length, 10, 1);
+    sgr_values = getRandomArray(chart_labels.length, 0, 1);
     k_factor_values = getRandomArray(chart_labels.length, 1, 0.08);
     survival_rates = getSurvivalRates(chart_labels.length, 1, 0.001, 0.4, 1.1);
     damage_indices = getRandomArray(chart_labels.length, 10, 1);
@@ -455,7 +455,8 @@ demo = {
       data.labels = chart_labels;
       myChartData.config.options.scales.yAxes[0].ticks.suggestedMax = 30;
       data.datasets[0].borderColor = 'aqua';
-      document.getElementById('graph_name').textContent = 'Sustained Growth Rate (%)'
+      document.getElementById('graph_name').textContent = 'Specific Growth Rate (%)'
+      document.getElementById('growth_category').textContent = 'Specific growth rate(SGR) indicates the increase of biomass per salmon.'
       myChartData.update();
     });
     $("#1").click(function() {
@@ -465,7 +466,8 @@ demo = {
       data.labels = chart_labels;
       myChartData.config.options.scales.yAxes[0].ticks.suggestedMax = 2
       data.datasets[0].borderColor = 'yellow';
-      document.getElementById('graph_name').textContent = 'K-Factor (Condition Factor)'
+      document.getElementById('graph_name').textContent = 'K-factor (Condition Factor)'
+      document.getElementById('growth_category').textContent = 'K-factor is an index of the condition of individual fish.'
       myChartData.update();
     });
 
@@ -477,6 +479,7 @@ demo = {
       myChartData.config.options.scales.yAxes[0].ticks.suggestedMax = 1
       data.datasets[0].borderColor = 'orange';
       document.getElementById('graph_name').textContent = 'Survival Rate (%)'
+      document.getElementById('growth_category').textContent = 'Survival rate is the proportion of salmons which are still alive.'
       myChartData.update();
     });
 
@@ -488,6 +491,7 @@ demo = {
       myChartData.config.options.scales.yAxes[0].ticks.suggestedMax = 1
       data.datasets[0].borderColor = 'red';
       document.getElementById('graph_name').textContent = 'Damage Index'
+      document.getElementById('growth_category').textContent = 'Damage index indicates the average number of detected wounds per salmon.'
       myChartData.update();
     });
   },
@@ -689,7 +693,7 @@ demo = {
         xAxisID: 'x'
       },
         {
-        label: "Upper Band",
+        label: "Confidence Interval (95 %)",
         type: "line",
         backgroundColor: "rgb(75, 192, 255, 0.5)",
         borderColor: "transparent",
@@ -701,7 +705,7 @@ demo = {
         xAxisID: 'x'
       },
       {
-        label: "Lower Band",
+        label: "",
         type: "line",
         backgroundColor: "rgb(75, 192, 255, 0.5)",
         borderColor: "transparent",
@@ -716,7 +720,7 @@ demo = {
 //      options: gradientChartOptionsConfiguration
       options: {
         legend: {
-          display: false,
+          display: true,
         },
         scales: {
           xAxes: [{
