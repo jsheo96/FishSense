@@ -309,7 +309,10 @@ demo = {
             },
           }],
           yAxes: [{
-              ticks: {fontColor: "white"},
+              ticks: {
+                fontColor: "white",
+                beginAtZero: true
+              },
               gridLines: {
                   display:false
               }
@@ -342,6 +345,8 @@ demo = {
     var myChart = new Chart(ctx, get_option_for_bar('DO   (mg/L)', 'navy',7.8));
     var ctx = document.getElementById('Salinity').getContext("2d");
     var myChart = new Chart(ctx, get_option_for_bar('Salinity (‰)', 'grey',5.23));
+    var ctx = document.getElementById('Ammonia').getContext("2d");
+    var myChart = new Chart(ctx, get_option_for_bar('Ammonia (ppm)', 'green', 0.1));
   },
   initGrowthCharts: function() {
     gradientChartOptionsConfigurationWithTooltipPurple = {
