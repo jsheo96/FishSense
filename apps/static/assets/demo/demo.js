@@ -347,6 +347,8 @@ demo = {
     var myChart = new Chart(ctx, get_option_for_bar('Salinity (‰)', 'grey',5.23));
     var ctx = document.getElementById('Ammonia').getContext("2d");
     var myChart = new Chart(ctx, get_option_for_bar('Ammonia (ppm)', 'green', 0.1));
+    var ctx = document.getElementById('Turbidity').getContext("2d");
+    var myChart = new Chart(ctx, get_option_for_bar('Turbidity (NTU)', 'LightSeaGreen', 1.64));
   },
   initGrowthCharts: function() {
     gradientChartOptionsConfigurationWithTooltipPurple = {
